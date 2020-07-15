@@ -25,6 +25,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private final LayoutInflater mLayoutInflater;
     private final Context mContext;
     private List<String> mData;
+    private OnItemClickListener mOnItemClickListener = null;
 
     public  MyRecyclerViewAdapter(Context context){
         mContext = context;
@@ -67,6 +68,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
     /*實作拖曳效果*/
 
+    public void setmOnIteClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
     public class MyTextViewHolder extends RecyclerView.ViewHolder{
 
         @BindView(R.id.textView)
@@ -79,9 +84,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("MyTextViewHolder", "onClick--> AdapterPosition = " + getAdapterPosition());
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(v,getAdapterPosition());
+                    }
                 }
             });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view , int position);
     }
 }

@@ -8,6 +8,8 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +45,16 @@ public class MainActivity extends AppCompatActivity {
         helper.attachToRecyclerView(mRecyclerView);
         /*添加拖曳效果*/
 
-        recyclerViewMoveHelper.setItemViewSwipeEnable(true);//是否開啟滑動刪除
+        recyclerViewMoveHelper.setItemViewSwipeEnable(false);//是否開啟滑動刪除
         recyclerViewMoveHelper.setLongPressDragEnable(true);//是否開啟長按排序
 
+        mAdapter.setmOnIteClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                Log.d("MyTextViewHolder", "onClick--> AdapterPosition = " + position);
+            }
+        });
         List data = new ArrayList<>();
         data.add("one");
         data.add("two");
